@@ -1,0 +1,347 @@
+clc
+clear
+% o=imread('G:\2019年文章\0211multigaboryu2.bmp');%0474removeclusteringresult.bmp     E:\老板期刊模板\0474removeclusteringresulttest.bmp
+                                    %0474preferenceline2.bmp
+                                     %0474removeclusteringresulttest   E:\0003 5 5.bmp
+                                     %F:\0042.bmp      E:\老板期刊模板\0474preferenceline2.bmp
+                                     %E:\老板期刊模板\0474removeclusteringresulttest.bmp
+                                     %G:\2018年的文章\0138test.bmp
+                                     %G:\2018年的文章\第三篇\0022.bmp
+                                     %G:\2018年的文章\第三篇\自己的方法\0474.bmp
+                                     %G:\2018年的文章\Discerning 文章方法对比试验图像\临时方法\Robotics\0474justgaboryuzhi.bmp
+o=imread('C:\Users\xiaohao\Desktop\图像处理技术\焊缝照片（原始）\new.bmp');
+
+
+                                     %G:\2019年文章\0022multigaboryu22.bmp
+                                     % o=imread('G:\SoftDownload\0487result.bmp');
+% % % % A=imread('E:\0006方向度量.bmp');
+% % % % imshow(o)
+% % % % T=o;
+% % % % A=imread('E:\2016 7 14\背面第三道  要用\0015.bmp');%E:\T型接头焊接图像   厚度50mm\0015.bmp
+% % % % A=imread('E:\T型接头焊接图像   厚度50mm\0015.bmp');
+% % % [m,n]=size(A);
+% % % B=zeros(m,n);
+% % % [hzbx,zzbx]=find(A>=mean(mean(A))+40);
+% % % [hzb2x,zzb2x]=find(A<mean(mean(A))+40);
+% % % for a=1:length(hzbx)
+% % %     A(hzbx(a),zzbx(a))=255;
+% % % end
+% % % % A(:,n-20:n)=0;
+% % % for b=1:length(hzb2x)
+% % %     A(hzb2x(b),zzb2x(b))=0;
+% % % end
+% % % for c=2:m-1
+% % %     for d=2:n-1
+% % %         if A(c,d)==255 && A(c-1,d)==0 && A(c+1,d)==0
+% % %             A(c,d)=0;
+% % %         end
+% % %     end
+% % % end
+% % % ax=importdata('C:\Users\he\Desktop\siftDemoV4\siftDemoV4\loc11.txt');
+% % % ax=round(ax);
+% % % bx=importdata('C:\Users\he\Desktop\siftDemoV4\siftDemoV4\loc12.txt');
+% % % bx=round(bx);
+% % % [allh,allz]=find(A==255);
+% % % t=1;
+% % % for x=1:length(ax)
+% % %     for y=1:length(allh)
+% % %         lengt2{x}(y)=sqrt((bx(x)-allh(y))^2+(ax(x)-allz(y))^2);
+% % %     end
+% % %     if min(lengt2{x})>5
+% % % %         d2(t)=d(x);
+% % % %         c2(t)=c(x);
+% % % %         t=t+1;
+% % %           savex2(t)=x;
+% % %           t=t+1;
+% % %     end
+% % %     
+% % % end
+% % % if t>1
+% % % ax(savex2)=[];
+% % % bx(savex2)=[];
+% % % end
+% % % % bx=bx-100;
+% % % % ax=ax+50;
+% % % % for x=1:length(ax)
+% % % %     A(bx(x)-5:bx(x)+5,ax(x))=128;
+% % % %     A(bx(x),ax(x)-5:ax(x)+5)=128;
+% % % % end
+% % % % figure
+% % % % imshow(A)
+% % % %%%%%%%%%%%%%%%膨胀
+% % % % se = strel('disk',5);
+% % % % o= imdilate(o,se);
+% % % % figure
+% % % % imshow(o)
+% % % % imwrite(o,'E:\老板期刊模板\0474preferenceline2pengzhang.bmp');
+% % % %%%%%%%%%%%%%%%%%%%%%%
+% % % % x=o;
+[h,l]=size(o);
+
+E=zeros(h,l);
+F=E;
+I=E;
+T=E;
+A=E;
+W=E;
+% oo=E;
+o(:,1:10)=0;
+o(:,l-10:l)=0;
+o(1:10,:)=0;
+o(h-10:h,:)=0;
+oo=o;
+G=E;
+%%%%%%%%%%%%%%%%%%%%%%%
+[m,n]=size(o);
+% % N=m*n;
+% % num=zeros(1,256);
+% % p=zeros(1,256);
+% % 
+% % for i=1:m
+% % for j=1:n
+% % num(o(i,j)+1)=num(o(i,j)+1)+1;
+% % end
+% % end
+% % 
+% % for i=0:255;
+% % p(i+1)=num(i+1)/N;
+% % end
+% % 
+% % totalmean=0;
+% % for i=0:255;
+% % totalmean=totalmean+i*p(i+1);
+% % end
+% % 
+% % maxvar=0;
+% % 
+% % for k=0:255
+% % kk=k+1;
+% % zerosth=sum(p(1:kk));
+% % 
+% % firsth=0;
+% % for h=0:k
+% % firsth=firsth+h*p(h+1);
+% % end
+% % 
+% % var=totalmean*zerosth-firsth;
+% % var=var*var;
+% % var=var/(zerosth*(1-zerosth)+0.01);
+% % var=sqrt(var);
+% % if(var>maxvar)
+% % maxvar=var;
+% % point=k;
+% % end
+% % 
+% % end
+% % 
+% % threshold=point;
+% % [h3,l3]=find(o>=threshold);
+% % [h2,l2]=find(o<threshold);
+% % for a=1:length(h3)
+% %     o(h3(a),l3(a))=255;
+% % end
+% % for a=1:length(h2)
+% %     o(h2(a),l2(a))=0;
+% % end
+% % figure
+% % imshow(o)
+% % 
+% % 
+% % 
+% % %%%%%%%%%%%%%%%%%%%%%%%%
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%小去厚度小于激光条纹的数据
+% % for a=1:l-1
+% %     for b=2:h-1
+% %         if oo(b,a)==255&&oo(b-1,a)==0&&oo(b+1,a)==0
+% %             oo(b,a)=0;
+% %         end
+% %     end
+% % end
+% % figure
+% % imshow(oo)
+
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+first=1;
+z1=1;
+num=1;
+[hzb,zzb]=find(oo==1);
+% for a=10:l-10
+%     for b=h-10:-1:10
+%         if o(b,a)==255
+%             hzb(first)=b;
+%             zzb(first)=a;
+%             first=first+1;
+%         end
+%     end
+% end
+
+
+saveh{z1}(num)=hzb(1);
+savez{z1}(num)=zzb(1);
+for a=2:length(hzb)
+     for c=1:z1
+        for d=1:length(saveh{c})
+               dist{c}(d)=sqrt((hzb(a)-saveh{c}(d))^2+(zzb(a)-savez{c}(d))^2);
+        end
+        mindist(c)=(min(dist{c}));
+     end
+     lastmindist=min(mindist);
+     [x,findz]=find(mindist==lastmindist);
+      if lastmindist<5 &&length(findz)==1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%设置不同的值就可以获取不同的聚类结果
+                temp1=length(saveh{findz})+1;
+            
+                saveh{findz}(temp1)=hzb(a);
+                savez{findz}(temp1)=zzb(a);
+      end
+      if lastmindist<5 &&length(findz)>1
+                temp2=length(saveh{findz(1)})+1;
+            
+                saveh{findz(1)}(temp2)=hzb(a);
+                savez{findz(1)}(temp2)=zzb(a);
+      end
+      if lastmindist>=5
+                z1=z1+1;
+                saveh{z1}(num)=hzb(a);
+                savez{z1}(num)=zzb(a);
+      end
+end
+% % %%%%%%%%%%%%%%%%各个类细化
+for c=1:z1
+ k=1;
+ sumn=0;
+ if length(savez{c})==1
+     savezz{c}(k)=savez{c}(1);
+     savehh{c}(k)=saveh{c}(1);
+%      savenum(c)=1;
+ end
+if length(savez{c})>1
+ for a=1:length(savez{c})-1
+     if savez{c}(a+1)==savez{c}(a)
+         savezz{c}(k)=savez{c}(a);
+         savehh{c}(k)=sumn+saveh{c}(a);
+     else
+         savezz{c}(k)=savez{c}(a);  
+         k=k+1;
+     end
+ end
+ if savez{c}(length(savez{c}))~=savez{c}(length(savez{c})-1)
+     savezz{c}(k)=savez{c}(length(savez{c}));
+ end
+ for b=1:length(savezz{c})
+       [xzz{c}{b},yzz{c}{b}]=find(savez{c}==savezz{c}(b));
+        savehh{c}(b)=round(mean(saveh{c}(yzz{c}{b})));
+%         savenum(c)=max(saveh{c}(yzz{c}{b}))-min((saveh{c}(yzz{c}{b})));
+ end
+end
+end
+
+for a=1:z1
+    for b=1:length(savehh{a})
+        E(savehh{a}(b),savezz{a}(b))=1;
+    end
+end
+figure
+imshow(E)
+%%%%%%%%%%%%%%%%%%%%%%合并
+
+% % % allnum=1;
+% % % for a=1:length(saveh)-1
+% % %     tempx=a+1;
+% % %     while tempx<=length(saveh)
+% % %        btdistnum=1;
+% % %        for b=1:length(saveh{a})
+% % %             for c=1:length(saveh{tempx})
+% % % %                 btdist(btdistnum)=sqrt((saveh{a}(b)-saveh{tempx}(c))^2+(savez{a}(b)-savez{tempx}(c))^2);
+% % %                 btdist{allnum}(btdistnum)=sqrt((saveh{a}(b)-saveh{tempx}(c))^2+(savez{a}(b)-savez{tempx}(c))^2);
+% % %                 btdistnum=btdistnum+1;
+% % %             end
+% % %        end
+% % % %        minbtdist=min(btdist);
+% % %        minbtdist=min(btdist{allnum});
+% % %        if minbtdist<5
+% % %            saveh{a}=[saveh{a} saveh{tempx}];
+% % %            savez{a}=[savez{a} savez{tempx}];
+% % %            saveh(tempx)=[];
+% % %            savez(tempx)=[];
+% % %        else
+% % %            tempx=tempx+1;
+% % % %            z1=z1-1;
+% % %        end
+% % % %        clear btdist;
+% % %        allnum=allnum+1;
+% % % %        tempx=tempx+1;
+% % %     end
+% % % end
+
+allnum=1;
+for a=1:length(savehh)-1
+    tempx=a+1;
+    while tempx<=length(savehh)
+       btdistnum=1;
+       for b=1:length(savehh{a})
+            for c=1:length(savehh{tempx})
+%                 btdist(btdistnum)=sqrt((saveh{a}(b)-saveh{tempx}(c))^2+(savez{a}(b)-savez{tempx}(c))^2);
+                btdist{allnum}(btdistnum)=sqrt((savehh{a}(b)-savehh{tempx}(c))^2+(savezz{a}(b)-savezz{tempx}(c))^2);
+                btdistnum=btdistnum+1;
+            end
+       end
+%        minbtdist=min(btdist);
+       minbtdist=min(btdist{allnum});
+       if minbtdist<5
+           saveh{a}=[saveh{a} saveh{tempx}];
+           savez{a}=[savez{a} savez{tempx}];
+           
+           savehh{a}=[savehh{a} savehh{tempx}];
+           savezz{a}=[savezz{a} savezz{tempx}];
+           
+           saveh(tempx)=[];
+           savez(tempx)=[];
+           savehh(tempx)=[];
+           savezz(tempx)=[];
+           
+       else
+           tempx=tempx+1;
+%            z1=z1-1;
+       end
+%        clear btdist;
+       allnum=allnum+1;
+%        tempx=tempx+1;
+    end
+end
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%画圈，每个圈代表一个类
+oo=o;
+for xx=1:length(savez)
+    aveh(xx)=mean(saveh{xx});
+    avez(xx)=mean(savez{xx});
+    for findmaxdist=1:length(saveh{xx})
+        foryuanradius{xx}(findmaxdist)=sqrt((aveh(xx)-saveh{xx}(findmaxdist))^2+(avez(xx)-savez{xx}(findmaxdist))^2);
+    end
+    findradius(xx)=max(foryuanradius{xx});
+    for drawx=1:h
+        for drawy=1:l
+            if sqrt((drawx-aveh(xx))^2+(drawy-avez(xx))^2)>=findradius(xx)-1&&sqrt((drawx-aveh(xx))^2+(drawy-avez(xx))^2)<=findradius(xx)+1
+                oo(drawx,drawy)=1; %128
+            end
+        end
+    end
+end
+figure
+imshow(oo)
+% imwrite(oo,'G:\2018年的文章\第四篇\0140cluster.bmp');
+for a=1:z1
+    distance(a)=sqrt((saveh{a}(1)-saveh{a}(length(saveh{a})))^2+(savez{a}(1)-savez{a}(length(savez{a})))^2);
+end
+maxdist=find(distance==max(distance));
+
+for a=1:length(saveh{maxdist})
+    F(saveh{maxdist}(a),savez{maxdist}(a))=255;
+end
+figure
+imshow(F)
+
+
